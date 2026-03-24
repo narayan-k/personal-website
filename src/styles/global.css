@@ -1,0 +1,674 @@
+/* ======================================
+ 🎨 THEME VARIABLES
+====================================== */
+:root {
+	/* Fonts */
+	--font-heading: "Clash Display", sans-serif;
+	--font-body: "Inter", sans-serif;
+	--font-accent: "JetBrains Mono", monospace;
+
+	/* Colors */
+	--color-bg: #000; /* cleaner black base */
+	--color-surface: #0f0f0f;
+	--color-text: #fafafa;
+	--color-muted: #a1a1a1;
+	--color-accent: #3b82f6;
+
+	/* Glassmorphism */
+	--glass-bg: rgba(255, 255, 255, 0.05);
+	--glass-border: rgba(255, 255, 255, 0.15);
+	--glass-blur: 50px;
+	--glass-saturation: 180%;
+	--glass-shadow: inset 0 0.5px 1px rgba(255, 255, 255, 0.2);
+
+	/* Layout */
+	--radius-md: 16px;
+	--radius-lg: 20px;
+	--max-width: 1200px;
+
+	/* Timeline */
+	--timeline-x: 26px; /* consistent left offset */
+	--timeline-line-width: 2px;
+	--timeline-dot-size: 14px;
+
+}
+
+/* ======================================
+ 🧱 BASE STYLES
+====================================== */
+html,
+body {
+	margin: 0;
+	padding: 0;
+	font-family: var(--font-body);
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	scroll-behavior: smooth;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+body {
+	position: relative;
+	overflow-x: hidden;
+}
+
+#root {
+	position: relative;
+	isolation: isolate;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+	font-family: var(--font-heading);
+	font-weight: 600;
+	letter-spacing: -0.015em;
+	line-height: 1.1;
+	text-rendering: optimizeLegibility;
+	margin: 0.5rem 0;
+}
+
+p {
+	margin: 0.5rem 0 1rem;
+	color: var(--color-muted);
+}
+
+.accent {
+	font-family: var(--font-accent);
+	font-size: 0.9rem;
+	letter-spacing: -0.01em;
+	color: var(--color-muted);
+}
+
+/* ======================================
+ 📄 LAYOUT STRUCTURE
+====================================== */
+section {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 6rem 2rem;
+	scroll-margin-top: 80px;
+	background: radial-gradient(circle at 50% 40%, #0a0a0a, #000);
+}
+
+.container {
+	width: 100%;
+	max-width: var(--max-width);
+	margin: 0 auto;
+	padding: 0 1.5rem;
+}
+
+/* ======================================
+ 🔗 LINKS
+====================================== */
+a {
+	color: var(--color-accent);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #60a5fa;
+}
+
+/* ======================================
+ 📜 NAVIGATION
+====================================== */
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.75);
+	backdrop-filter: blur(20px);
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+	padding: 1rem;
+	z-index: 20;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+main {
+	position: relative;
+	z-index: 1;
+}
+
+.cursor-glow {
+	display: none;
+}
+
+.cursor-bubbles {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 2;
+	overflow: hidden;
+	display: none;
+}
+
+.cursor-bubble {
+	position: absolute;
+	left: var(--bubble-x);
+	top: var(--bubble-y);
+	width: var(--bubble-width, var(--bubble-size));
+	height: var(--bubble-height, var(--bubble-size));
+	border-radius: var(--bubble-radius);
+	background:
+		radial-gradient(circle at 28% 30%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.82) 30%, rgba(255, 255, 255, 0.38) 58%, rgba(255, 255, 255, 0) 100%);
+	box-shadow:
+		inset 0 1px 1px rgba(255, 255, 255, 0.95),
+		0 0 28px rgba(255, 255, 255, 0.24);
+	opacity: 0;
+	transform: translate3d(-50%, -50%, 0) rotate(var(--bubble-rotate)) scale(0.5);
+	filter: blur(1px);
+	animation: cursorBubbleFloat var(--bubble-duration) ease-out var(--bubble-delay) forwards;
+	will-change: transform, opacity;
+}
+
+html[data-cursor-glow="enabled"] .cursor-bubbles {
+	display: block;
+}
+
+html[data-cursor-glow="disabled"] .cursor-bubbles {
+	display: none;
+}
+
+@keyframes cursorBubbleFloat {
+	0% {
+		opacity: 0;
+		transform: translate3d(-50%, -50%, 0) rotate(var(--bubble-rotate)) scale(0.5);
+	}
+	16% {
+		opacity: var(--bubble-opacity);
+		transform: translate3d(-50%, -54%, 0) rotate(calc(var(--bubble-rotate) + 8deg)) scale(1.04, 0.9);
+	}
+	52% {
+		opacity: calc(var(--bubble-opacity) * 0.72);
+		transform: translate3d(
+			calc(-50% + (var(--bubble-drift-x) * 0.45)),
+			calc(-50% + (var(--bubble-drift-y) * 0.5)),
+			0
+		)
+		rotate(calc(var(--bubble-rotate) - 8deg))
+		scale(1.18, 0.86);
+	}
+	100% {
+		opacity: 0;
+		transform: translate3d(
+			calc(-50% + var(--bubble-drift-x)),
+			calc(-50% + var(--bubble-drift-y)),
+			0
+		)
+		rotate(calc(var(--bubble-rotate) + 14deg))
+		scale(1.36, 0.82);
+	}
+}
+
+nav a {
+	color: var(--color-muted);
+	font-weight: 500;
+	transition: color 0.3s ease;
+}
+
+nav a:hover {
+	color: var(--color-text);
+}
+
+/* ======================================
+ 🧊 GLASSMORPHISM UTILITIES
+====================================== */
+.glass {
+	background: var(--glass-bg);
+	border: 1px solid var(--glass-border);
+	backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+	-webkit-backdrop-filter: blur(var(--glass-blur))
+		saturate(var(--glass-saturation));
+	box-shadow: var(--glass-shadow);
+	border-radius: var(--radius-md);
+	color: var(--color-text);
+}
+
+/* ======================================
+ ✨ ANIMATIONS & EFFECTS
+====================================== */
+.fade-in {
+	opacity: 0;
+	transform: translateY(10px);
+	animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* ======================================
+ 🧭 HERO SECTION
+====================================== */
+.hero-title {
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: clamp(2.5rem, 6vw, 4rem);
+	color: var(--color-text);
+	margin-bottom: 1rem;
+	letter-spacing: 0.02em;
+}
+
+.hero-subtitle {
+	font-family: var(--font-body);
+	font-weight: 400;
+	font-size: clamp(1rem, 2vw, 1.2rem);
+	color: rgba(255, 255, 255, 0.8);
+	margin-bottom: 0.6rem;
+}
+
+.hero-buttons {
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	align-items: center;
+	margin-top: 2rem;
+}
+
+/* ======================================
+ 🫧 LIQUID GLASS BUTTON
+====================================== */
+.button-glass {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.7rem;
+	min-height: 2.5rem;
+	padding: 0.5rem 1.15rem;
+	border-radius: var(--radius-md);
+	color: var(--color-text);
+	font-family: var(--font-body);
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	text-decoration: none;
+	overflow: hidden;
+	isolation: isolate;
+	cursor: pointer;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.035);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.12),
+		0 0 0 1px rgba(255, 255, 255, 0.02),
+		0 8px 24px rgba(0, 0, 0, 0.18),
+		0 0 24px rgba(255, 255, 255, 0.06);
+	transition:
+		border-color 0.25s ease,
+		background 0.25s ease,
+		box-shadow 0.25s ease,
+		color 0.25s ease;
+}
+
+.button-glass:hover {
+	border-color: rgba(255, 255, 255, 0.18);
+	background: rgba(255, 255, 255, 0.05);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.16),
+		0 10px 26px rgba(0, 0, 0, 0.2),
+		0 0 34px rgba(255, 255, 255, 0.12);
+	color: var(--color-text);
+}
+
+.button-glass-highlight,
+.button-glass-shadow {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	border-radius: inherit;
+	opacity: 1;
+}
+
+.button-glass-highlight {
+	background:
+		radial-gradient(circle at 24% 28%, rgba(255, 255, 255, 0.16), transparent 36%),
+		radial-gradient(circle at 72% 70%, rgba(255, 255, 255, 0.08), transparent 34%),
+		linear-gradient(115deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 70%);
+	background-size: 130% 130%;
+	background-position: 0% 0%;
+	animation: buttonGlowDrift 7s ease-in-out infinite;
+}
+
+.button-glass-shadow {
+	background:
+		radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04), transparent 74%),
+		radial-gradient(circle at 78% 110%, rgba(255, 255, 255, 0.04), transparent 40%);
+	filter: blur(10px);
+	animation: buttonGlowPulse 4.8s ease-in-out infinite;
+}
+
+.button-glass-content {
+	position: relative;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.7rem;
+}
+
+.button-glass-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	opacity: 0.9;
+}
+
+@keyframes buttonGlowDrift {
+	0%,
+	100% {
+		background-position: 8% 18%;
+		opacity: 0.72;
+	}
+	50% {
+		background-position: 92% 78%;
+		opacity: 0.98;
+	}
+}
+
+@keyframes buttonGlowPulse {
+	0%,
+	100% {
+		transform: scale(0.96);
+		opacity: 0.55;
+	}
+	50% {
+		transform: scale(1.04);
+		opacity: 0.9;
+	}
+}
+
+/* ======================================
+ 💬 CONTACT SECTION
+====================================== */
+.contact-title {
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: clamp(1.8rem, 4vw, 2.5rem);
+	color: var(--color-text);
+	margin-bottom: 1.5rem;
+	letter-spacing: 0.02em;
+}
+
+.contact-text {
+	color: rgba(255, 255, 255, 0.7);
+	max-width: 520px;
+	line-height: 1.6;
+	margin-bottom: 2.5rem;
+	font-family: var(--font-body);
+	font-weight: 400;
+	text-align: center;
+}
+
+.contact-links {
+	display: flex;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.contact-button {
+	justify-content: center;
+}
+
+.contact-footer {
+	color: rgba(255, 255, 255, 0.4);
+	font-size: 0.9rem;
+	margin-top: 3rem;
+	font-family: var(--font-accent);
+	text-align: center;
+}
+
+/* ======================================
+ 🧱 EXPERIENCE SECTION (Fixed Alignment)
+====================================== */
+.experience-section {
+	position: relative;
+	background: var(--color-bg);
+	color: var(--color-text);
+}
+
+.experience-title {
+	font-family: var(--font-heading);
+	font-size: clamp(1.8rem, 4vw, 2.5rem);
+	font-weight: 500;
+	text-align: center;
+	margin-bottom: 3rem;
+	letter-spacing: 0.02em;
+}
+
+/* Timeline Container */
+.timeline-container {
+	position: relative;
+	max-width: 700px;
+	margin: 0 auto;
+	padding-left: 3rem;
+}
+
+/* Line — perfectly centered on dot */
+.timeline-line {
+	position: absolute;
+	top: calc(0.6rem + var(--timeline-dot-size) / 2);
+	left: calc(var(--timeline-x) - var(--timeline-line-width) / 2);
+	width: var(--timeline-line-width);
+	height: calc(100% - var(--timeline-dot-size));
+	background-color: var(--color-accent);
+	opacity: 0.25;
+	border-radius: var(--timeline-line-width);
+	transform-origin: top center;
+}
+
+/* Each item */
+.timeline-item {
+	position: relative;
+	margin-bottom: 3.5rem;
+}
+
+/* Dot */
+.timeline-dot {
+	position: absolute;
+	top: 0.6rem;
+	left: calc(var(--timeline-x) - 3rem);
+	transform: translate(-50%, 0);
+	width: var(--timeline-dot-size);
+	height: var(--timeline-dot-size);
+	background-color: var(--color-accent);
+	border: 2px solid var(--color-bg);
+	border-radius: 50%;
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* Card */
+.timeline-content {
+	padding: 1rem 1.5rem;
+	margin-left: 2rem;
+	border-radius: var(--radius-md);
+	backdrop-filter: blur(25px) saturate(180%);
+	-webkit-backdrop-filter: blur(25px) saturate(180%);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: rgba(255, 255, 255, 0.03);
+	transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+	background: rgba(255, 255, 255, 0.05);
+	border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Text styles */
+.timeline-role {
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: 1.2rem;
+	margin-bottom: 0.3rem;
+}
+
+.timeline-meta {
+	font-family: var(--font-accent);
+	font-size: 0.9rem;
+	color: var(--color-muted);
+	margin-bottom: 0.5rem;
+}
+
+.timeline-description {
+	font-family: var(--font-body);
+	color: rgba(255, 255, 255, 0.7);
+	line-height: 1.6;
+}
+
+/* ======================================
+ 💻 PROJECTS SECTION
+====================================== */
+.projects-section {
+	text-align: center;
+	padding: 8rem 2rem;
+	background: radial-gradient(circle at 50% 50%, #0a0a0a, #000);
+	color: var(--color-text);
+}
+
+.projects-title {
+	font-family: var(--font-heading);
+	font-size: clamp(1.8rem, 4vw, 2.5rem);
+	font-weight: 500;
+	margin-bottom: 3rem;
+}
+
+.carousel-container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.carousel-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.5rem;
+	padding: 2rem;
+	border-radius: var(--radius-lg);
+	backdrop-filter: blur(30px) saturate(160%);
+	-webkit-backdrop-filter: blur(30px) saturate(160%);
+	background: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+	transition: all 0.3s ease;
+}
+
+.project-image {
+	width: 100%;
+	max-width: 650px;
+	height: auto;
+	border-radius: var(--radius-md);
+	box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+}
+
+.project-details {
+	max-width: 600px;
+}
+
+.project-details h3 {
+	font-family: var(--font-heading);
+	font-weight: 500;
+	font-size: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.project-details p {
+	color: rgba(255, 255, 255, 0.75);
+	line-height: 1.6;
+	margin-bottom: 1rem;
+}
+
+.carousel-controls {
+	display: flex;
+	justify-content: center;
+	gap: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+.carousel-container:hover .carousel-controls button {
+	opacity: 1;
+}
+
+.carousel-controls button {
+	background: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: var(--color-text);
+	font-size: 1.3rem;
+	width: 2.8rem;
+	height: 2.8rem;
+	border-radius: 50%;
+	cursor: pointer;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	transition: all 0.3s ease;
+	opacity: 0.4;
+}
+
+.carousel-controls button:hover {
+	background: rgba(255, 255, 255, 0.1);
+	border-color: var(--color-accent);
+	color: var(--color-accent);
+	opacity: 1;
+}
+
+.project-image-frame {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 1.5rem;
+}
+
+.coming-soon {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* Normal project (landscape) */
+.project-image {
+	width: 100%;
+	max-width: 640px;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	border-radius: var(--radius-md);
+	box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+/* “Since Then” phone app style */
+.phone-frame {
+	width: 280px;
+	aspect-ratio: 9 / 19.5; /* iPhone-style ratio */
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 36px;
+	padding: 0.5rem;
+	backdrop-filter: blur(30px);
+	-webkit-backdrop-filter: blur(30px);
+	box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.phone-frame .project-image {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	border-radius: 28px;
+}
