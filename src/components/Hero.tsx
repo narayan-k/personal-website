@@ -33,7 +33,7 @@ export function Hero() {
 
 			<div className="hero-buttons">
 				<LiquidGlassButton href="#projects">View My Work</LiquidGlassButton>
-				<LiquidGlassButton href="/images/cv.pdf">Download CV</LiquidGlassButton>
+				<LiquidGlassButton href="/images/CV.pdf">Download CV</LiquidGlassButton>
 			</div>
 		</section>
 	);
