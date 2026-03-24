@@ -1,6 +1,10 @@
 # Personal Website
 
+Live site: [narayan-kuleindiren.vercel.app](https://narayan-kuleindiren.vercel.app)
+
 A personal portfolio website built with React, TypeScript, and Vite.
+
+## Overview
 
 The site includes:
 - A hero section with animated call-to-action buttons
@@ -24,12 +28,18 @@ npm install
 npm run dev
 ```
 
+To build for production:
+
+```bash
+npm run build
+```
+
 ## Project Structure
 
 ```text
 src/
   components/    Reusable UI sections and effects
-  styles/        Global styling
+  styles/        Global styles
   types/         Local TypeScript declarations
 public/
   images/        Static assets like the CV and project media
@@ -38,4 +48,4 @@ public/
 ## Notes
 
 - Static files inside `public/` are served from the site root.
-- The downloadable CV currently lives at `public/images/CV.pdf`.
+- The downloadable CV lives at `public/images/CV.pdf`.
