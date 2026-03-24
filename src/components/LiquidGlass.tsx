@@ -15,9 +15,9 @@ export function LiquidGlassButton({
 	icon,
 	className = "",
 }: LiquidGlassButtonProps) {
-	const isScrollLink =
-		href.startsWith("#") ||
-		(!href.startsWith("http") && !href.endsWith(".pdf"));
+	const isScrollLink = href.startsWith("#");
+	const opensNewTab =
+		href.startsWith("http://") || href.startsWith("https://");
 
 	const baseMotionProps = {
 		whileHover: {
@@ -57,8 +57,8 @@ export function LiquidGlassButton({
 	return (
 		<motion.a
 			href={href}
-			target={href.startsWith("http") ? "_blank" : undefined}
-			rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+			target={opensNewTab ? "_blank" : undefined}
+			rel={opensNewTab ? "noopener noreferrer" : undefined}
 			{...baseMotionProps}
 		/>
 	);
