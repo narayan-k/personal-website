@@ -4,12 +4,10 @@ import { Hero } from "./components/Hero";
 import { Experience } from "./components/Experience";
 import { Projects } from "./components/Projects";
 import { Contact } from "./components/Contact";
-import { CursorGlow } from "./components/CursorGlow";
 
 export default function App() {
 	return (
 		<>
-			<CursorGlow />
 			<nav>
 				{[
 					"Hero",

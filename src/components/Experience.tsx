@@ -18,7 +18,7 @@ const experiences: ExperienceItem[] = [
 	},
 	{
 		company: "Mindstep",
-		role: "AI Lead",
+		role: "Data Scientist",
 		period: "2020 – 2024",
 		description:
 			"Led development of machine-learning pipelines and models to predict neurological outcomes. Designed experiments, performed statistical validation and model evaluation, and productionised reproducible training workflows.",
@@ -38,6 +38,7 @@ export function Experience() {
 
 	return (
 		<section ref={ref} className="section experience-section" id="experience">
+			<p className="section-kicker">Experience</p>
 			<motion.h2
 				initial={{ opacity: 0, y: -20 }}
 				animate={inView ? { opacity: 1, y: 0 } : {}}

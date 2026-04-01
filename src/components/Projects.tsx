@@ -51,11 +51,20 @@ export function Projects() {
 
 	return (
 		<section
+			id="projects"
 			className="projects-section"
 			onMouseEnter={() => setPaused(true)}
 			onMouseLeave={() => setPaused(false)}
 		>
-			<h2 className="projects-title">Projects</h2>
+			<div className="projects-header">
+				<div>
+					<p className="section-kicker">Projects</p>
+					<h2 className="projects-title">Selected Work</h2>
+				</div>
+				<p className="project-index">
+					{String(current + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+				</p>
+			</div>
 
 			<div className="carousel-container">
 				<AnimatePresence mode="wait">

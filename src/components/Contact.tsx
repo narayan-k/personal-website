@@ -14,36 +14,42 @@ export function Contact() {
 
 	return (
 		<section className="section fade-in" id="contact">
+			<motion.p {...fadeIn(0)} className="section-kicker">
+				Contact
+			</motion.p>
 			<motion.h2 {...fadeIn(0)} className="contact-title">
-				Get in Touch
+				Let&apos;s Build Something Useful
 			</motion.h2>
 
-			<motion.p {...fadeIn(0.2)} className="contact-text">
-				I’m always open to new opportunities, collaborations, or just a friendly
-				chat. Feel free to reach out!
-			</motion.p>
+			<div className="contact-panel">
+				<motion.p {...fadeIn(0.2)} className="contact-text">
+					I&apos;m open to interesting roles, collaborations, and product ideas.
+					If you&apos;re working on something thoughtful and technically sharp,
+					I&apos;d love to hear about it.
+				</motion.p>
 
-			<motion.div {...fadeIn(0.4)} className="contact-links">
-				<ContactLink
-					href="mailto:nkuleindiren@gmail.com"
-					label="Email"
-					icon={<HiOutlineMail size={20} />}
-				/>
-				<ContactLink
-					href="https://www.linkedin.com/in/narayan-kuleindiren/"
-					label="LinkedIn"
-					icon={<FaLinkedin size={20} />}
-				/>
-				<ContactLink
-					href="https://github.com/narayan-k"
-					label="GitHub"
-					icon={<FaGithub size={20} />}
-				/>
-			</motion.div>
+				<motion.div {...fadeIn(0.4)} className="contact-links">
+					<ContactLink
+						href="mailto:nkuleindiren@gmail.com"
+						label="Email"
+						icon={<HiOutlineMail size={20} />}
+					/>
+					<ContactLink
+						href="https://www.linkedin.com/in/narayan-kuleindiren/"
+						label="LinkedIn"
+						icon={<FaLinkedin size={20} />}
+					/>
+					<ContactLink
+						href="https://github.com/narayan-k"
+						label="GitHub"
+						icon={<FaGithub size={20} />}
+					/>
+				</motion.div>
 
-			<motion.p {...fadeIn(0.6)} className="contact-footer">
-				© {new Date().getFullYear()} Narayan Kuleindiren — All Rights Reserved
-			</motion.p>
+				<motion.p {...fadeIn(0.6)} className="contact-footer">
+					© {new Date().getFullYear()} Narayan Kuleindiren
+				</motion.p>
+			</div>
 		</section>
 	);
 }
