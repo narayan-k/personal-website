@@ -1,5 +1,6 @@
 import { Link, Element } from "react-scroll";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Hero } from "./components/Hero";
 import { Experience } from "./components/Experience";
 import { Projects } from "./components/Projects";
@@ -42,6 +43,7 @@ export default function App() {
 				</Element>
 			</main>
 			<Analytics />
+			<SpeedInsights />
 		</>
 	);
 }
