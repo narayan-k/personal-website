@@ -651,6 +651,10 @@ section {
 		word-break: break-word;
 	}
 
+	.hero-title {
+		max-width: none;
+	}
+
 	nav {
 		align-items: stretch;
 		gap: 0.45rem;
@@ -764,6 +768,7 @@ section {
 
 	.hero-title {
 		font-size: clamp(2.8rem, 15vw, 3.8rem);
+		max-width: none;
 	}
 
 	.hero-subtitle,
