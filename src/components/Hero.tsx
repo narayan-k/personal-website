@@ -12,7 +12,7 @@ export function Hero() {
 						transition={{ duration: 0.5 }}
 						className="section-kicker"
 					>
-						London / Data / Software
+						London / AI / Software
 					</motion.p>
 
 					<motion.h1
@@ -30,8 +30,8 @@ export function Hero() {
 						transition={{ duration: 0.8, delay: 0.2 }}
 						className="hero-subtitle"
 					>
-						I build clear, useful products at the intersection of data,
-						engineering, and design.
+						I build useful AI tools and products at the intersection of
+						engineering, data, and design.
 					</motion.h2>
 
 					<motion.p
@@ -40,7 +40,7 @@ export function Hero() {
 						transition={{ duration: 0.8, delay: 0.45 }}
 						className="accent"
 					>
-						Python / React / Machine Learning / Product Thinking
+						Python / React / AI / Product Thinking
 					</motion.p>
 
 					<div className="hero-buttons">
@@ -57,8 +57,7 @@ export function Hero() {
 				>
 					<p className="section-kicker">Current Focus</p>
 					<p>
-						Model development, internal tooling, and interfaces that make
-						technical work feel direct instead of opaque.
+						Building tools and workflows that help make AI systems more useful.
 					</p>
 				</motion.aside>
 			</div>
